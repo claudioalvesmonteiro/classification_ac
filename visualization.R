@@ -29,7 +29,7 @@ ggplot(data=results_cv, aes(x=model, y=test_accuracy_score, fill=model)) +
                                vjust=1,
                                face="plain")
   ) #+ labs(x=xname, y=yname, title=title)
-ggsave('results/accuracy_plot.png', height = 6, width = 6, units = 'in')
+ggsave('results/accuracy_plot.png', height = 5, width = 6, units = 'in')
 
 ### AUC-ROC
 ggplot(data=results_cv, aes(x=model, y=test_roc_auc_score, fill=model)) +
@@ -47,16 +47,20 @@ ggplot(data=results_cv, aes(x=model, y=test_roc_auc_score, fill=model)) +
                                vjust=1,
                                face="plain")
   ) #+ labs(x=xname, y=yname, title=title)
-ggsave('results/roc_auc_plot.png', height = 6, width = 6, units = 'in')
+ggsave('results/roc_auc_plot.png', height = 5, width = 6, units = 'in')
 
 
 ### feature importance
+
+importance$feature = factor(importance$feature, levels=importance$feature[order(importance$importance)])
+
 ggplot(data=importance, aes(x=feature, y=importance)) +
-  geom_bar(stat = 'identity') +
+  geom_bar(stat = 'identity', fill='#440154FF') +
   #scale_fill_viridis_d() +
   #scale_y_continuous(limits = c(0, 1))+
   #geom_jitter(color="black", size=0.4, alpha=0.9) +
   theme_minimal() +
+  coord_flip()+
   theme(
     legend.position="none",
     plot.title = element_text(size=11, face='plain'),
@@ -66,5 +70,6 @@ ggplot(data=importance, aes(x=feature, y=importance)) +
                                vjust=1,
                                face="plain")
   ) #+ labs(x=xname, y=yname, title=title)
-ggsave('results/roc_auc_plot.png', height = 6, width = 6, units = 'in')
+ggsave('results/feature_importance_plot.png', height = 5, width = 5, units = 'in')
+
 
